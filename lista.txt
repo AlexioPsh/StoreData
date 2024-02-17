@@ -1,0 +1,16 @@
+done:
+	adicionar data ao grafico/check
+	dar update ao grafico/check
+	resetar o grafico/check
+	salvar data do grafico inteiro/check
+	alterar o tamanho do grafico/check
+	alterar o aspeto do site/semi checked
+	alterar os estilos dos botões/checked
+	alterar os estilos do grafico/checked
+to do:
+	remover data ao grafico
+
+
+ideas:
+	mudar o tipo de grafico (acumulativo ou n, variação de dados)
+	criar graficos diferentes
