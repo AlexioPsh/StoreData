@@ -65,7 +65,7 @@ function initializeChart() {
 const chart = initializeChart();
 
 function addData() {
-    const newY = parseFloat(document.getElementById("dataInput").value) + yValues[yValues.length - 1];
+    const newY = (parseFloat(document.getElementById("sellInput").value)- parseFloat(document.getElementById("buyInput").value)) + yValues[yValues.length - 1];
     if (!isNaN(newY)) {
         const currentDate = new Date();
         const currentDay = currentDate.getDate();
@@ -78,7 +78,8 @@ function addData() {
         chart.data.labels = xValues;
         chart.data.datasets[0].data = yValues;
         chart.update();
-        document.getElementById("dataInput").value = '';
+        document.getElementById("sellInput").value = '';
+        document.getElementById("buyInput").value = '';
     } else {
         alert("Please enter a valid number for Y value.");
     }
