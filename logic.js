@@ -20,52 +20,68 @@ function initializeChart() {
     const chartTitle = loadChartTitleFromLocalStorage();
 
     const chart = new Chart("myChart", {
-      type: "line",
-      data: {
-          labels: xValues,
-          datasets: [{
-              fill: true,
-              lineTension: 0,
-              backgroundColor: "rgb(0, 91, 65)",
-              borderColor: "rgb(0, 129, 112)",
-              data: yValues
-          }]
-      },
-      options: {
-          legend: { display: false },
-          title: {
-              display: true,
-              text: chartTitle,
-              fontSize: 16,
-              fontColor: "rgb(0, 129, 112)"
-          },
-          scales: {
-              xAxes: [{
-                  ticks: {
-                      fontColor: "rgb(0, 129, 112)"
-                  },
-                  gridLines: {
-                      color: "rgb(35, 45, 63)"
-                  }
-              }],
-              yAxes: [{
-                  ticks: {
-                      fontColor: "rgb(0, 129, 112)"
-                  },
-                  gridLines: {
-                      color: "rgb(35, 45, 63)"
-                  }
-              }]
-          }
-      }
-  });
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                fill: true,
+                lineTension: 0,
+                backgroundColor: "rgb(0, 91, 65)",
+                borderColor: "rgb(0, 129, 112)",
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: chartTitle,
+                fontSize: 16,
+                fontColor: "rgb(0, 129, 112)"
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: "rgb(0, 129, 112)"
+                    },
+                    gridLines: {
+                        color: "rgb(35, 45, 63)"
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        fontColor: "rgb(0, 129, 112)"
+                    },
+                    gridLines: {
+                        color: "rgb(35, 45, 63)"
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var currentValue = data.datasets[0].data[tooltipItem.index];
+                        var difference = currentValue - yValues[tooltipItem.index - 1];
+                        if(difference >= 0){
+                            return  currentValue + ' (+' + difference + ')';
+                        }
+                        else{
+                            return currentValue + ' (' + difference + ')';
+                        }
+                    }
+                }
+            }
+        }
+    });
     return chart;
 }
 
 const chart = initializeChart();
 
 function addData() {
-    const newY = (parseFloat(document.getElementById("sellInput").value)- parseFloat(document.getElementById("buyInput").value)) + yValues[yValues.length - 1];
+    const sellInputValue = parseFloat(document.getElementById("sellInput").value);
+    const buyInputValue = parseFloat(document.getElementById("buyInput").value);
+    const newY = (sellInputValue - buyInputValue) + yValues[yValues.length - 1];
     if (!isNaN(newY)) {
         const currentDate = new Date();
         const currentDay = currentDate.getDate();
@@ -81,7 +97,7 @@ function addData() {
         document.getElementById("sellInput").value = '';
         document.getElementById("buyInput").value = '';
     } else {
-        alert("Please enter a valid number for Y value.");
+        alert("Please enter valid numbers for sell and buy inputs.");
     }
 }
 
@@ -96,7 +112,7 @@ function removeLastData() {
 
 function resetData() {
     const confirmed = window.confirm("Are you sure you want to reset the graph?");
-    if (confirmed === true) {
+    if (confirmed) {
         xValues.length = 1;
         yValues.length = 1;
         chart.data.labels = xValues;
@@ -173,4 +189,3 @@ document.getElementById('graphTitle').addEventListener('input', function(event) 
     updateChartTitle(newTitle);
     saveChartTitleToLocalStorage(newTitle);
 });
-
