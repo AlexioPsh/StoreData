@@ -66,7 +66,7 @@ function initializeChart() {
                             return  currentValue.toFixed(2) + ' (+' + difference.toFixed(2) + ')';
                         }
                         else{
-                            return currentValue + ' (' + difference + ')';
+                            return currentValue.toFixed(2) + ' (' + difference.toFixed(2) + ')';
                         }
                     }
                 }
