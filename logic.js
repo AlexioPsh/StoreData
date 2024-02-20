@@ -63,7 +63,7 @@ function initializeChart() {
                         var currentValue = data.datasets[0].data[tooltipItem.index];
                         var difference = currentValue - yValues[tooltipItem.index - 1];
                         if(difference >= 0){
-                            return  currentValue + ' (+' + difference + ')';
+                            return  currentValue.toFixed(2) + ' (+' + difference.toFixed(2) + ')';
                         }
                         else{
                             return currentValue + ' (' + difference + ')';
